@@ -177,6 +177,9 @@ class TableCalendar<T> extends StatefulWidget {
   /// Called whenever a day range gets selected.
   final OnRangeSelected? onRangeSelected;
 
+  //Debounce tap action
+  final Function onHeaderTappedDebounced;
+
   /// Called whenever any day gets tapped.
   final OnDaySelected? onDaySelected;
 
@@ -260,6 +263,7 @@ class TableCalendar<T> extends StatefulWidget {
     this.onPageChanged,
     this.onFormatChanged,
     this.onCalendarCreated,
+    required this.onHeaderTappedDebounced,
   })  : assert(availableCalendarFormats.keys.contains(calendarFormat)),
         assert(availableCalendarFormats.length <= CalendarFormat.values.length),
         assert(weekendDays.isNotEmpty
@@ -459,6 +463,7 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
                 onLeftChevronTap: _onLeftChevronTap,
                 onRightChevronTap: _onRightChevronTap,
                 onHeaderTap: () => widget.onHeaderTapped?.call(value),
+                headerButtonTap: () => widget.onHeaderTappedDebounced,
                 onHeaderLongPress: () =>
                     widget.onHeaderLongPressed?.call(value),
                 headerStyle: widget.headerStyle,
