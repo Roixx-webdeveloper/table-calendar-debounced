@@ -67,7 +67,7 @@ class CalendarHeader extends StatelessWidget {
               onPressed: onLeftChevronTap,
               margin: headerStyle.rightChevronMargin,
               padding: headerStyle.rightChevronPadding,
-              debouncedAction: onLeftChevronTap,
+              debouncedAction: leftChevronTap,
             ),
           Expanded(
             child: headerTitleBuilder?.call(context, focusedMonth) ??
@@ -105,7 +105,7 @@ class CalendarHeader extends StatelessWidget {
               onPressed: onRightChevronTap,
               margin: headerStyle.rightChevronMargin,
               padding: headerStyle.rightChevronPadding,
-              debouncedAction: onRightChevronTap,
+              debouncedAction: rightChevronTap,
             ),
         ],
       ),
