@@ -180,7 +180,7 @@ class TableCalendar<T> extends StatefulWidget {
   //Debounce tap action
   //  final void Function(DateTime focusedDay)? onPageChanged;
 
-  final void Function(DateTime focusedDay)? onHeaderTappedDebounced;
+  final void Function(DateTime focusedDay) onHeaderTappedDebounced;
 
   /// Called whenever any day gets tapped.
   final OnDaySelected? onDaySelected;
@@ -462,12 +462,12 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
               return CalendarHeader(
                 headerTitleBuilder: widget.calendarBuilders.headerTitleBuilder,
                 focusedMonth: value,
+                focusedDay: _focusedDay.value,
                 onLeftChevronTap: _onLeftChevronTap,
                 onRightChevronTap: _onRightChevronTap,
                 onHeaderTap: () => widget.onHeaderTapped?.call(value),
-                headerButtonTap: (focusedDay) {
-                  widget.onHeaderTappedDebounced;
-                },
+                headerButtonTap: (DateTime focusedDay) =>
+                    widget.onHeaderTappedDebounced(focusedDay),
                 onHeaderLongPress: () =>
                     widget.onHeaderLongPressed?.call(value),
                 headerStyle: widget.headerStyle,

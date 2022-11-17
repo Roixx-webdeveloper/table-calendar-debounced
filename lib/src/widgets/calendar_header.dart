@@ -1,8 +1,10 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:table_calendar/src/widgets/custom_debounced_icon_button.dart';
 
 import '../customization/header_style.dart';
 import '../shared/utils.dart' show CalendarFormat, DayBuilder;
@@ -12,6 +14,7 @@ import 'format_button.dart';
 class CalendarHeader extends StatelessWidget {
   final dynamic locale;
   final DateTime focusedMonth;
+  final DateTime focusedDay;
   final CalendarFormat calendarFormat;
   final HeaderStyle headerStyle;
   final VoidCallback onLeftChevronTap;
@@ -21,7 +24,7 @@ class CalendarHeader extends StatelessWidget {
   final ValueChanged<CalendarFormat> onFormatButtonTap;
   final Map<CalendarFormat, String> availableCalendarFormats;
   final DayBuilder? headerTitleBuilder;
-  final Function headerButtonTap;
+  final void Function(DateTime) headerButtonTap;
 
   const CalendarHeader({
     Key? key,
@@ -37,6 +40,7 @@ class CalendarHeader extends StatelessWidget {
     required this.availableCalendarFormats,
     this.headerTitleBuilder,
     required this.headerButtonTap,
+    required this.focusedDay,
   }) : super(key: key);
 
   @override
@@ -52,12 +56,14 @@ class CalendarHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           if (headerStyle.leftChevronVisible)
-            CustomIconButton(
+            CustomDebouncedIconButton(
+              focusedDay: focusedDay,
+              duration: const Duration(seconds: 2),
               icon: headerStyle.leftChevronIcon,
-              onTap: onLeftChevronTap,
-              margin: headerStyle.leftChevronMargin,
-              padding: headerStyle.leftChevronPadding,
-              headerButtonTap: headerButtonTap,
+              onPressed: onLeftChevronTap,
+              margin: headerStyle.rightChevronMargin,
+              padding: headerStyle.rightChevronPadding,
+              debouncedAction: headerButtonTap,
             ),
           Expanded(
             child: headerTitleBuilder?.call(context, focusedMonth) ??
@@ -88,12 +94,14 @@ class CalendarHeader extends StatelessWidget {
               ),
             ),
           if (headerStyle.rightChevronVisible)
-            CustomIconButton(
+            CustomDebouncedIconButton(
+              focusedDay: focusedDay,
+              duration: const Duration(seconds: 2),
               icon: headerStyle.rightChevronIcon,
-              onTap: onRightChevronTap,
-              headerButtonTap: headerButtonTap,
+              onPressed: onRightChevronTap,
               margin: headerStyle.rightChevronMargin,
               padding: headerStyle.rightChevronPadding,
+              debouncedAction: headerButtonTap,
             ),
         ],
       ),

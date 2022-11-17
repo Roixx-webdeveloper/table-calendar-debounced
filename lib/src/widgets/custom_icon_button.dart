@@ -26,28 +26,28 @@ class CustomIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final platform = Theme.of(context).platform;
 
-    return TapDebouncer(
-        cooldown: const Duration(seconds: 2),
-        builder: ((context, onTap) {
-          return Padding(
-            padding: margin,
-            child: !kIsWeb &&
-                    (platform == TargetPlatform.iOS ||
-                        platform == TargetPlatform.macOS)
-                ? CupertinoButton(
-                    onPressed: onTap,
-                    padding: padding,
-                    child: icon,
-                  )
-                : InkWell(
-                    onTap: onTap,
-                    borderRadius: BorderRadius.circular(100.0),
-                    child: Padding(
-                      padding: padding,
-                      child: icon,
-                    ),
-                  ),
-          );
-        }));
+    Future<void> onTapped() async {
+      onTap;
+      return Future.delayed(Duration(microseconds: 1));
+    }
+
+    return Padding(
+        padding: margin,
+        child: !kIsWeb &&
+                (platform == TargetPlatform.iOS ||
+                    platform == TargetPlatform.macOS)
+            ? CupertinoButton(
+                onPressed: () async => await onTapped(),
+                padding: padding,
+                child: icon,
+              )
+            : InkWell(
+                onTap: onTap,
+                borderRadius: BorderRadius.circular(100.0),
+                child: Padding(
+                  padding: padding,
+                  child: icon,
+                ),
+              ));
   }
 }
