@@ -51,6 +51,7 @@ class _CustomDebouncedIconButtonState extends State<CustomDebouncedIconButton> {
     widget.onPressed();
 
     _timer = Timer(widget.duration, () => isEnabled.value = true);
+    widget.debouncedAction(widget.focusedDay);
   }
 
   void _onButtonPressed2() {
