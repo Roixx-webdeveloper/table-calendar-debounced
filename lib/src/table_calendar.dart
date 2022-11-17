@@ -181,6 +181,8 @@ class TableCalendar<T> extends StatefulWidget {
   //  final void Function(DateTime focusedDay)? onPageChanged;
 
   final void Function(DateTime focusedDay) onHeaderTappedDebounced;
+  final void Function(DateTime focusedDay) onLeftChevronTappedDebounced;
+  final void Function(DateTime focusedDay) onRightChevronTappedDebounced;
 
   /// Called whenever any day gets tapped.
   final OnDaySelected? onDaySelected;
@@ -266,6 +268,8 @@ class TableCalendar<T> extends StatefulWidget {
     this.onFormatChanged,
     this.onCalendarCreated,
     required this.onHeaderTappedDebounced,
+    required this.onLeftChevronTappedDebounced,
+    required this.onRightChevronTappedDebounced,
   })  : assert(availableCalendarFormats.keys.contains(calendarFormat)),
         assert(availableCalendarFormats.length <= CalendarFormat.values.length),
         assert(weekendDays.isNotEmpty
@@ -482,6 +486,10 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
 
                   widget.onFormatChanged?.call(format);
                 },
+                leftChevronTap: (DateTime focusedDay) =>
+                    widget.onLeftChevronTappedDebounced(focusedDay),
+                rightChevronTap: (DateTime focusedDay) =>
+                    widget.onRightChevronTappedDebounced(focusedDay),
               );
             },
           ),
