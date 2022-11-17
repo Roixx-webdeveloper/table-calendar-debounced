@@ -54,6 +54,7 @@ class _CustomDebouncedIconButtonState extends State<CustomDebouncedIconButton> {
   }
 
   void _onButtonPressed2() {
+    widget.onPressed();
     print("Focused 2");
     _timer.cancel();
     _timer = Timer(widget.duration, () {
