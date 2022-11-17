@@ -25,6 +25,8 @@ class CalendarHeader extends StatelessWidget {
   final Map<CalendarFormat, String> availableCalendarFormats;
   final DayBuilder? headerTitleBuilder;
   final void Function(DateTime) headerButtonTap;
+  final void Function(DateTime) rightChevronTap;
+  final void Function(DateTime) leftChevronTap;
 
   const CalendarHeader({
     Key? key,
@@ -41,6 +43,8 @@ class CalendarHeader extends StatelessWidget {
     this.headerTitleBuilder,
     required this.headerButtonTap,
     required this.focusedDay,
+    required this.rightChevronTap,
+    required this.leftChevronTap,
   }) : super(key: key);
 
   @override
@@ -63,7 +67,7 @@ class CalendarHeader extends StatelessWidget {
               onPressed: onLeftChevronTap,
               margin: headerStyle.rightChevronMargin,
               padding: headerStyle.rightChevronPadding,
-              debouncedAction: headerButtonTap,
+              debouncedAction: onLeftChevronTap,
             ),
           Expanded(
             child: headerTitleBuilder?.call(context, focusedMonth) ??
@@ -101,7 +105,7 @@ class CalendarHeader extends StatelessWidget {
               onPressed: onRightChevronTap,
               margin: headerStyle.rightChevronMargin,
               padding: headerStyle.rightChevronPadding,
-              debouncedAction: headerButtonTap,
+              debouncedAction: onRightChevronTap,
             ),
         ],
       ),
