@@ -42,7 +42,7 @@ class _CustomDebouncedIconButtonState extends State<CustomDebouncedIconButton> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    // _timer.cancel();
     super.dispose();
   }
 
